@@ -37,11 +37,73 @@ function organize(srcPath){
 
     for(let i = 0 ; i < allFiles.length; i++){
 
-       let ext = path.extname(allFiles[i]);  // it returns the extensions of the files
-       console.log(ext);
+      let fullPathOfFile = path.join(srcPath , allFiles[i]);
+      //1. check if it is a file or folder
+
+      let isFile = fs.lstatSync(fullPathOfFile).isFile();
+      //lstatsync gives the information regarding the link provided ,
+      if(isFile){
+        //1.1 get ext name
+        let ext = path.extname(allFiles[i]).split(".")[1];
+        //1.2 get folder name from extension
+        let folderName = getFolderName(ext);
+
+        //1.3 copy from src folder (srcPath) and paste in dest folder (folder_name e.g. document, media etc)
+                    //copy      kya copy kro    paste 
+        copyFileToDest(srcPath, fullPathOfFile, folderName);
+
+
+
+      }
     }
 
 
 }
-let srcPath = "E:/project - 1/downloads"
-organize(srcPath);
+
+function getFolderName(ext) {
+  
+    //magic 
+
+   for (let key in types){
+
+
+    for(let i = 0 ; i <types[key].length ; i++){
+
+        if(types[key][i] == ext){
+
+            return key;
+        }
+    }
+
+   }
+   return "miscelleneous"; 
+  }
+  
+  function copyFileToDest(srcPath, fullPathOfFile, folderName) {
+    
+    //1. folderName ka path banana h
+
+    let destFolderPath = path.join(srcPath , "organized_files",folderName);
+
+    //2 check folder if exists, if it does not, then make folder
+
+    if(!fs.existsSync(destFolderPath)){
+        fs.mkdirSync(destFolderPath);
+    }
+
+
+
+    let fileName = path.basename(fullPathOfFile);
+    let destFileName = path.join(destFolderPath , fileName);
+
+    fs.copyFileSync(fullPathOfFile , destFileName);
+    //magic 
+  }
+
+
+// let srcPath = "E:/project - 1/downloads"
+// organize(srcPath);
+
+module.exports = {
+    organize:organize
+  }

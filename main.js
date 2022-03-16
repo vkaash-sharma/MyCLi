@@ -1,5 +1,6 @@
 
 let helpFunc = require("./commands/help");
+let orgFunc = require("./commands/organize");
 
 let inputArr = process.argv.slice(2);
 let command = inputArr[0];
@@ -13,7 +14,8 @@ switch(command){
         break;
 
     case "organize":
-        console.log(" we are in organize section");
+        // console.log(" we are in organize section");
+        orgFunc.organize(path);
         break;
         
     case "tree":
