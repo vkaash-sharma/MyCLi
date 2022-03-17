@@ -1,6 +1,7 @@
 
 let helpFunc = require("./commands/help");
 let orgFunc = require("./commands/organize");
+let treeFunc = require("./commands/tree");
 
 let inputArr = process.argv.slice(2);
 let command = inputArr[0];
@@ -19,7 +20,7 @@ switch(command){
         break;
         
     case "tree":
-        console.log("we are in tree section");
+          treeFunc.treeKey(path);  
         break;
     default:
         console.log("Entering Invalid Command");

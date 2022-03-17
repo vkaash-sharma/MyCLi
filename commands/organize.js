@@ -97,6 +97,7 @@ function getFolderName(ext) {
     let destFileName = path.join(destFolderPath , fileName);
 
     fs.copyFileSync(fullPathOfFile , destFileName);
+    // fs.unlinkSync(srcPath);
     //magic 
   }
 
